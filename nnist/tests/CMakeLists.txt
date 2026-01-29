@@ -9,5 +9,9 @@ target_include_directories(nnist_tests PRIVATE
   ${CMAKE_SOURCE_DIR}/vendor/NTest/include
   ${CMAKE_SOURCE_DIR}/vendor/NTest/vendor/NCLI/include
 )
+target_compile_definitions(nnist_tests PRIVATE 
+    TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/"
+)
+message("TEST DIRECTORY: ${CMAKE_CURRENT_SOURCE_DIR}/")
 target_link_libraries(nnist_tests PRIVATE nnist)
 add_test(NAME nnist_tests COMMAND nnist_tests)

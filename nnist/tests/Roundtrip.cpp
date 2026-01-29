@@ -5,7 +5,7 @@ using namespace nnist;
 
 // Tests
 TEST(NIST_RoundTrip_Structural_Stability) {
-    auto data = READ_FILE("nnist/tests/data/valid1.1.an2");
+    auto data = READ_FILE(TEST_DIR "data/valid1.1.an2");
 
     auto A = PARSE_FILE(data);
     auto bytes = SERIALIZE_FILE(A);
@@ -20,8 +20,8 @@ TEST(NIST_RoundTrip_Structural_Stability) {
 }
 
 TEST(NIST_RoundTrip_RealFiles) {
-    std::filesystem::path in_dir = "nnist/tests/data";
-    std::filesystem::path out_dir = "nnist/tests/output";
+    std::filesystem::path in_dir = TEST_DIR "data";
+    std::filesystem::path out_dir = TEST_DIR "output";
 
     std::filesystem::create_directories(out_dir);
 
@@ -100,7 +100,7 @@ static const Record* FIRST_BINARY_RECORD(const File& file) {
 }
 
 TEST(NIST_Type4_Binary_Record_RoundTrip) {
-    auto data = nnist::READ_FILE("nnist/tests/data/valid1.1.an2");
+    auto data = nnist::READ_FILE(TEST_DIR "data/valid1.1.an2");
     auto file = nnist::PARSE_FILE(data);
 
     ASSERT_GT(file.records.size(), 0);
@@ -127,7 +127,7 @@ TEST(NIST_Type4_Binary_Record_RoundTrip) {
 }
 
 TEST(NIST_Type4_Image_Magic_Header) {
-    auto data = READ_FILE("nnist/tests/data/valid1.1.an2");
+    auto data = READ_FILE(TEST_DIR "data/valid1.1.an2");
     auto file = nnist::PARSE_FILE(data);
 
     const Record* rec = FIRST_BINARY_RECORD(file);
@@ -141,7 +141,7 @@ TEST(NIST_Type4_Image_Magic_Header) {
 }
 
 TEST(NIST_Type14_Image_Record_ParsesBinary999) {
-    auto data = READ_FILE("nnist/tests/data/face_jpb_DOM_GMT_DCS.an2");
+    auto data = READ_FILE(TEST_DIR "data/face_jpb_DOM_GMT_DCS.an2");
 
     auto file = nnist::PARSE_FILE(data);
     ASSERT_GT(file.records.size(), 0);

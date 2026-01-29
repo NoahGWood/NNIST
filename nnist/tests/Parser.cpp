@@ -107,7 +107,7 @@ TEST(NIST_Parse_Subfields_Items) {
 }
 
 TEST(NIST_Parse_Legacy_Binary_Record_Length) {
-    auto data = READ_FILE("nnist/tests/data/valid1.1.an2");
+    auto data = READ_FILE(TEST_DIR "/data/valid1.1.an2");
     auto file = PARSE_FILE(data);
 
     const Record* rec = &file.records[2];
@@ -123,7 +123,7 @@ TEST(NIST_Parse_Legacy_Binary_Record_Length) {
 }
 
 TEST(NIST_LEN_Field_Syncs_Record_Boundary) {
-    auto data = READ_FILE("nnist/tests/data/valid1.1.an2");
+    auto data = READ_FILE(TEST_DIR "/data/valid1.1.an2");
     auto file = PARSE_FILE(data);
 
     for (auto& rec : file.records) {
@@ -137,7 +137,7 @@ TEST(NIST_LEN_Field_Syncs_Record_Boundary) {
 }
 
 TEST(NIST_CNT_Drives_Record_Count) {
-    auto data = READ_FILE("nnist/tests/data/valid1.1.an2");
+    auto data = READ_FILE(TEST_DIR "/data/valid1.1.an2");
     auto file = PARSE_FILE(data);
 
     ASSERT_GT(file.records.size(), 1);
@@ -145,7 +145,7 @@ TEST(NIST_CNT_Drives_Record_Count) {
 }
 
 TEST(NIST_No_Record_Loss) {
-    auto data = READ_FILE("nnist/tests/data/face_jpb_DOM_GMT_DCS.an2");
+    auto data = READ_FILE(TEST_DIR "/data/face_jpb_DOM_GMT_DCS.an2");
     auto file = PARSE_FILE(data);
 
     ASSERT_GT(file.records.size(), 0);
