@@ -1,0 +1,51 @@
+name: SBOM & Security Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+jobs:
+  sbom:
+    name: Generate SBOM & Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Syft
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Generate SBOM (CycloneDX JSON)
+        run: |
+          mkdir -p artifacts/sbom
+          syft . -o cyclonedx-json > artifacts/sbom/project.sbom.json
+
+      - name: Run Vulnerability Scan
+        run: |
+          trivy fs \
+            --scanners vuln,secret,misconfig \
+            --format json \
+            --output artifacts/sbom/project.vuln.json \
+            .
+
+      - name: Hash artifacts
+        run: |
+          sha256sum artifacts/sbom/* > artifacts/sbom/checksums.txt
+
+      - name: Upload SBOM Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-and-security
+          path: artifacts/sbom/

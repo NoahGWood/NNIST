@@ -1,0 +1,18 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default",
+      "generator": "Ninja",
+      "binaryDir": "build"
+    },
+    {
+      "name": "freestanding",
+      "generator": "Ninja",
+      "binaryDir": "build-freestanding",
+      "cacheVariables": {
+        "NNIST_FREESTANDING": "ON"
+      }
+    }
+  ]
+}
